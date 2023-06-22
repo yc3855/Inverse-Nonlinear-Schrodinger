@@ -37,7 +37,9 @@ for s = 1:Ns
         %
         % Let w_s be the solution to the adjoint terminal value problem
         % (see overleaf document), using the forward solver for the linear 
-        % Schrodinger equation. The terminal condition at time T is conj(rz)
+        % Schrodinger equation. For the coefficients, use k_c, gamma_c, ...
+        % sigmaTPA_c, sigma_c, and u_s. The terminal condition ...
+        % at time T is conj(rz)
 
         % the gradient w.r.t k            
         if ismember("k",MinVar)
