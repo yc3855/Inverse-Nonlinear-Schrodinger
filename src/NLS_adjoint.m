@@ -1,4 +1,4 @@
-function [wbreal_ret,wbimag_ret]=INVcoeff_adjoint(k,kb,gamma,sigmaTPA,sigma,u_real,u_imag,d_real,d_imag)
+function [wbreal_ret,wbimag_ret]=NLS_adjoint(k,kb,gamma,sigmaTPA,sigma,u_real,u_imag,d_real,d_imag)
 
 % Solve w_t = (i/2k)(w_xx + w_yy) + 2 (i gamma - 1/2 sigma_TPA) |u|^2 w
 %            +(-i gamma - 1/2 sigma_TPA) u^2 w + 1/2 sigma w
@@ -116,13 +116,15 @@ disp(nsteps)
 dt = T/nsteps;
 
 wreal_ret = zeros(((qx+1)*(qy+1)),(Nx*Ny),nsteps+1);
-wreal_ret(:,:,0) = P*w_real;
+wreal_ret(:,:,1) = P*w_real;
 wimag_ret = zeros(((qx+1)*(qy+1)),(Nx*Ny),nsteps+1);
-wimag_ret(:,:,0) = P*w_imag;
+wimag_ret(:,:,1) = P*w_imag;
 
-wbreal_ret = zeros((Nx*Ny),nsteps);
-wbimag_ret = zeros((Nx*Ny),nsteps);
+wbreal_ret = zeros((Nx*Ny),nsteps+1);
+wbimag_ret = zeros((Nx*Ny),nsteps+1);
 Vb = squeeze(kron(Vb_x(1,:), Vb_y(1,:)));
+wbreal_ret(:,1) = Vb*w_real;
+wbimag_ret(:,1) = Vb*w_imag;
 
 c11 = (0.391752226571890);
 
@@ -174,11 +176,11 @@ for it = 1:nsteps
     w_real  = c52*w_real2 + c53*w_real3 + c53_1*dt*rhsw_real3 + c54*w_real4 + c55*dt*rhsw_real; 
     w_imag  = c52*w_imag2 + c53*w_imag3 + c53_1*dt*rhsw_imag3 + c54*w_imag4 + c55*dt*rhsw_imag;
     
-    wreal_ret(:,:,it) = P*w_real;
-    wimag_ret(:,:,it) = P*w_imag;
+    wreal_ret(:,:,it+1) = P*w_real;
+    wimag_ret(:,:,it+1) = P*w_imag;
     
-    wbreal_ret(:,it) = Vb*w_real;
-    wbimag_ret(:,it) = Vb*w_imag;
+    wbreal_ret(:,it+1) = Vb*w_real;
+    wbimag_ret(:,it+1) = Vb*w_imag;
     
 end
 
