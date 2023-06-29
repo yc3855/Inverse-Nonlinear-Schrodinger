@@ -1,4 +1,4 @@
-function [ureal_ret,uimag_ret]=NLSINV_forward(k,kb,gamma,sigmaTPA,sigma)
+function [ubreal_ret,ubimag_ret]=NLS_forward(k,kb,gamma,sigmaTPA,sigma,uinit)
 
 % Solve u_t = (i/2k(x))(u_xx + u_yy) + (i gamma(x) - 1/2 sigma_TPA(x)) |u|^2 u
 %            -1/2 sigma(x) u
@@ -93,10 +93,12 @@ end
 % sigmaTPA is an array of shape [(qx+1)*(qy+1), Nx*Ny]
 % sigma is an array of shape [(qx+1)*(qy+1), Nx*Ny]
 
+% uinit is an array of shape [2, (qx+1)*(qy+1), Nx*Ny]
+
 for i=1:Nx
     for j=1:Ny
         
-        [uloc] = solnew(xloc(:,i),yloc(:,j),0);
+        uloc = squeeze(uinit(:,:,(i-1)*Ny + j));
 
         for d = 1:((qx+1)*(qy+1))
             u_real(d,(i-1)*Ny+j) = (uloc(1,:)*(W))*P(:,d);
@@ -116,10 +118,11 @@ nsteps = ceil(T/dt);
 disp(nsteps)
 dt = T/nsteps;
 
-ureal_ret = zeros(((qx+1)*(qy+1)),(Nx*Ny),nsteps+1);
-ureal_ret(:,:,0) = P*u_real;
-uimag_ret = zeros(((qx+1)*(qy+1)),(Nx*Ny),nsteps+1);
-uimag_ret(:,:,0) = P*u_imag;
+Vb = squeeze(kron(Vb_x(1,:), Vb_y(1,:)));
+ubreal_ret = zeros((Nx*Ny),nsteps+1);
+ubreal_ret(:,1) = Vb*u_real;
+ubimag_ret = zeros((Nx*Ny),nsteps+1);
+ubimag_ret(:,1) = Vb*u_imag;
 
 c11 = (0.391752226571890);
 
@@ -171,8 +174,8 @@ for it = 1:nsteps
     u_real  = c52*u_real2 + c53*u_real3 + c53_1*dt*rhsu_real3 + c54*u_real4 + c55*dt*rhsu_real; 
     u_imag  = c52*u_imag2 + c53*u_imag3 + c53_1*dt*rhsu_imag3 + c54*u_imag4 + c55*dt*rhsu_imag;
     
-    ureal_ret(:,:,it) = P*u_real;
-    uimag_ret(:,:,it) = P*u_imag;
+    ubreal_ret(:,it+1) = Vb*u_real;
+    ubimag_ret(:,it+1) = Vb*u_imag;
     
 end
 
@@ -273,23 +276,6 @@ subplot(3,1,3);
 mesh(X, Y, plot_zintensity);
 % colorbar
 title('intensity')
-
-end
-
-
-function [u] = solnew(xloc,yloc,t)
-
-dim_x = size(xloc);
-len_x = dim_x(1); % qx+1
-dim_y = size(yloc);
-len_y = dim_y(1); % qy+1
-
-u = zeros(2,len_x*len_y);
-
-for i=1:len_x
-    u(1,((i-1)*len_y+1):(i*len_y)) = cos(2*pi*(xloc(i)+yloc+t))';
-    u(2,((i-1)*len_y+1):(i*len_y)) = sin(2*pi*(xloc(i)+yloc+t))';
-end
 
 end
 
