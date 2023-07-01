@@ -1,7 +1,7 @@
 function [wbreal_ret,wbimag_ret]=NLS_adjoint(k,kb,gamma,sigmaTPA,sigma,u_real,u_imag,d_real,d_imag)
 
 % Solve w_t = (i/2k)(w_xx + w_yy) + 2 (i gamma - 1/2 sigma_TPA) |u|^2 w
-%            +(-i gamma - 1/2 sigma_TPA) u^2 w + 1/2 sigma w
+%            +(-i gamma - 1/2 sigma_TPA) \overline{u}^2 \overline{w} - 1/2 sigma w
 % in 2D 0 < x < 1, 0 < y < 1 by DG
 % periodic boundary conditions
 
@@ -293,12 +293,12 @@ for i=1:Nx
         Mw6 = (1/2)*(hx(1)/2)*(hy(1)/2)*(P')*diag(sigma_local)*W*P;
         
         wt_real(:,(i-1)*Ny+j) = (2/hx(1))*(2/hy(1))*(-Mw1*wimag_local - Mw2*wimag_local ...
-            - Mw3*wreal_local + Mw4_real*wimag_local + Mw4_imag*wreal_local ...
-            - Mw5_real*wreal_local + Mw5_imag*wimag_local + Mw6*wreal_local);
+            - Mw3*wreal_local - Mw4_real*wimag_local - Mw4_imag*wreal_local ...
+            - Mw5_real*wreal_local + Mw5_imag*wimag_local - Mw6*wreal_local);
         
         wt_imag(:,(i-1)*Ny+j) = (2/hx(1))*(2/hy(1))*( Mw1*wreal_local + Mw2*wreal_local ...
             - Mw3*wimag_local - Mw4_real*wreal_local + Mw4_imag*wimag_local ...
-            - Mw5_real*wimag_local - Mw5_imag*wreal_local + Mw6*wimag_local);
+            + Mw5_real*wimag_local + Mw5_imag*wreal_local - Mw6*wimag_local);
         
         % central flux: star = (local+out)/2
         % periodic BC
