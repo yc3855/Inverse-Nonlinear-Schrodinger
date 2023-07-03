@@ -1,1 +1,2 @@
-doc/README.md
+# Inverse-Nonlinear-Schrodinger
+The inverse coefficient problem to a nonlinear Schrodinger equation model
