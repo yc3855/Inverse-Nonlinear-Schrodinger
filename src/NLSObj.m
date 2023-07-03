@@ -47,7 +47,7 @@ for s = 1:Ns
         [ws_real,ws_imag,dt]=NLS_adjoint(k_c,gamma_c,sigmaTPA_c,sigma_c,...
             us_real,us_imag,real(d(:,s)),imag(d(:,s)),T);
         ws = ws_real + 1i*ws_imag;
-
+        ws = flip(ws,2);
         
 
         % use naive rectangle quadrature rule for the time integrals
