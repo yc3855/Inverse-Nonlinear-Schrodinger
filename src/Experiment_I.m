@@ -2,7 +2,7 @@
 MinVar=["gamma"]; 
 
 noiselevel=0.00; % set noise level
-beta_k=0e-7; beta_gamma=0e-7; beta_sigmaTPA=0e-7; beta_sigma=0; regularization parameters
+beta_k=0e-7; beta_gamma=0e-7; beta_sigmaTPA=0e-7; beta_sigma=0; % regularization parameters
 
 MaxIT=1000; % max number of iterations in optimization algorithm
 
