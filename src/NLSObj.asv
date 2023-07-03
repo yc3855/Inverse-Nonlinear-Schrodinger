@@ -57,15 +57,15 @@ for s = 1:Ns
         end
         % the gradient w.r.t gamma            
         if ismember("gamma",MinVar)
-            g(M+1:2*M) = g(M+1:2*M) + sum(real(1i*abs(us).^2.*us.*ws),2)*dt*dx*dy;
+            g(M+1:2*M) = g(M+1:2*M) + dt * sum(real(1i*abs(us).^2.*us.*ws),2)*dx*dy;
         end
         % the gradient w.r.t sigmaTPA            
         if ismember("sigmaTPA",MinVar)
-            g(2*M+1:3*M) = g(2*M+1:3*M) + sum(real(-1/2*abs(u_s).^2.*u_s.*w_s),2)*dt*dx*dy;
+            g(2*M+1:3*M) = g(2*M+1:3*M) + [integral_0^T real(-1/2*abs(u_s).^2.*u_s.*w_s) dt]*dx*dy;
         end
         % the gradient w.r.t sigma            
         if ismember("sigma",MinVar)
-            g(3*M+1:4*M) = g(3*M+1:4*M) + sum(real(-1/2*u_s.*w_s),2)*dt*dx*dy;
+            g(3*M+1:4*M) = g(3*M+1:4*M) + [integral_0^T real(-1/2*u_s.*w_s) dt]*dx*dy;
         end
         
     end

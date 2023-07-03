@@ -1,10 +1,12 @@
-function [ubreal_ret,ubimag_ret,dt]=NLS_forward(k,kb,gamma,sigmaTPA,sigma,uinit,T)
+function [ubreal_ret,ubimag_ret,dx,dy,dt]=NLS_forward(k,kb,gamma,sigmaTPA,sigma,uinit,T)
 
 % Solve u_t = (i/2k(x))(u_xx + u_yy) + (i gamma(x) - 1/2 sigma_TPA(x)) |u|^2 u
 %            -1/2 sigma(x) u
 % in 2D 0 < x < 1, 0 < y < 1 by DG from time 0 up to time T
 % Initial condition is uninit
 % Periodic boundary conditions
+%
+% Output: ubreal_ret, ubimag_ret are arrays of size ((Nx*Ny),nsteps+1)
 
 qx = 1; % qx = degree for u in x-axis
 qy = 1; % qy = degree for u in y-axis

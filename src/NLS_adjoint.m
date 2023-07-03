@@ -1,4 +1,4 @@
-function [wbreal_ret,wbimag_ret,dt]=NLS_adjoint(k,kb,gamma,sigmaTPA,sigma,...
+function [wbreal_ret,wbimag_ret,dx,dy,dt]=NLS_adjoint(k,kb,gamma,sigmaTPA,sigma,...
     u_real,u_imag,d_real,d_imag,T)
 
 % Solve w_t = (i/2k)(w_xx + w_yy) + 2 (i gamma - 1/2 sigma_TPA) |u|^2 w
@@ -8,6 +8,8 @@ function [wbreal_ret,wbimag_ret,dt]=NLS_adjoint(k,kb,gamma,sigmaTPA,sigma,...
 % in 2D 0 < x < 1, 0 < y < 1 by DG from time 0 up to time T
 % Initial condition is \overline{u(.,T) - d}
 % Periodic boundary conditions
+%
+% Output: wbreal_ret, wbimag_ret are arrays of size ((Nx*Ny),nsteps+1)
 
 qx = 1; % the degree for u in x-axis
 qy = 1; % the degree for u in y-axis
