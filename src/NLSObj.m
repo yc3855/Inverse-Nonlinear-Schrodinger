@@ -2,7 +2,7 @@
 % This function evaluate the objective function and its gradients with 
 % respect to the optimization variables
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function [f g] = NLSObj(X,MinVar,Ns,d)
+function [Phi grad] = NLSObj(X,MinVar,Ns,d)
 
 M=Nx*Ny; % total number of nodes in the spacial mesh
 % ne = size(SrcInfo,2); % number of edges/nodes on the domain boundary
@@ -12,8 +12,8 @@ gamma_c = X(M+1:2*M); % current value of gamma
 sigmaTPA_c = X(2*M+1:3*M); %current value of sigmaTPA
 sigma_c = X(3*M+1:4*M); %current value of sigma
 
-f = 0.0;
-g = zeros(4*M,1);
+Phi = 0.0;
+grad = zeros(4*M,1);
 
 for s = 1:Ns
  
@@ -32,7 +32,7 @@ for s = 1:Ns
     rz = ds - d(:,s);
     
     % the contribution to the objective function from source s
-    f = f + 0.5*sum(abs(rz).^2)*dx*dy;
+    Phi = Phi + 0.5*sum(abs(rz).^2)*dx*dy;
     
     % the contribution to the gradient from source s
     if nargout > 1         
@@ -53,19 +53,19 @@ for s = 1:Ns
         % use naive rectangle quadrature rule for the time integrals
         % the gradient w.r.t k            
         if ismember("k",MinVar)
-            %g(1:M) = g(1:M) + [integral_0^T real(-1i./(2*k.^2).*Delta u_s.* w_s) dt]*dx*dy;
+            %grad(1:M) = grad(1:M) + [integral_0^T real(-1i./(2*k.^2).*Delta u_s.* w_s) dt]*dx*dy;
         end
         % the gradient w.r.t gamma            
         if ismember("gamma",MinVar)
-            g(M+1:2*M) = g(M+1:2*M) + sum(real(1i*abs(us).^2.*us.*ws),2)*dt*dx*dy;
+            grad(M+1:2*M) = grad(M+1:2*M) + sum(real(1i*abs(us).^2.*us.*ws),2)*dt*dx*dy;
         end
         % the gradient w.r.t sigmaTPA            
         if ismember("sigmaTPA",MinVar)
-            g(2*M+1:3*M) = g(2*M+1:3*M) + sum(real(-1/2*abs(u_s).^2.*u_s.*w_s),2)*dt*dx*dy;
+            grad(2*M+1:3*M) = grad(2*M+1:3*M) + sum(real(-1/2*abs(u_s).^2.*u_s.*w_s),2)*dt*dx*dy;
         end
         % the gradient w.r.t sigma            
         if ismember("sigma",MinVar)
-            g(3*M+1:4*M) = g(3*M+1:4*M) + sum(real(-1/2*u_s.*w_s),2)*dt*dx*dy;
+            grad(3*M+1:4*M) = grad(3*M+1:4*M) + sum(real(-1/2*u_s.*w_s),2)*dt*dx*dy;
         end
         
     end
