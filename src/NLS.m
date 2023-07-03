@@ -72,18 +72,8 @@ disp(' ');
 disp('Generating synthetic data .......');
 disp(' ');
 
-d = zeros(M,Ns); % measured data
-for s = 1:Ns
-    
-    % Run NLS equation with initial condition f_s with coefficients 
-    % k_t, gamma_t, sigmaTPA_t, sigma_t using forward solver
-    %
-    % Let d_s be the solution at time T
-   
-    % Add noise to data
-    d(:,s) = d_s*(1+noiselevel*2*(rand(M,1)-0.5));
-   
-end
+d = GenerateData(M, Ns, noiselevel, T, f_s, k_t, gamma_t, sigmaTPA_t, sigma_t);
+
 disp('Finished generating synthetic data .......');
 
 
