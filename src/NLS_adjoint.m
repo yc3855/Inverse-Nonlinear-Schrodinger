@@ -1,15 +1,18 @@
-function [wbreal_ret,wbimag_ret]=NLS_adjoint(k,kb,gamma,sigmaTPA,sigma,u_real,u_imag,d_real,d_imag)
+function [wbreal_ret,wbimag_ret,dt]=NLS_adjoint(k,kb,gamma,sigmaTPA,sigma,...
+    u_real,u_imag,d_real,d_imag,T)
 
 % Solve w_t = (i/2k)(w_xx + w_yy) + 2 (i gamma - 1/2 sigma_TPA) |u|^2 w
 %            +(-i gamma - 1/2 sigma_TPA) \overline{u}^2 \overline{w} - 1/2 sigma w
 % in 2D 0 < x < 1, 0 < y < 1 by DG
-% periodic boundary conditions
+%            +(-i gamma - 1/2 sigma_TPA) u^2 w + 1/2 sigma w
+% in 2D 0 < x < 1, 0 < y < 1 by DG from time 0 up to time T
+% Initial condition is \overline{u(.,T) - d}
+% Periodic boundary conditions
 
 qx = 1; % the degree for u in x-axis
 qy = 1; % the degree for u in y-axis
 Nx = 20; % the number of cells in x-axis
 Ny = 20; % the number of cells in y-axis
-T = 1; % the simulation time
 % central flux
 
 % set up the grid
