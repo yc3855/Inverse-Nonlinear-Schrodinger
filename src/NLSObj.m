@@ -53,7 +53,16 @@ for s = 1:Ns
         % use naive rectangle quadrature rule for the time integrals
         % the gradient w.r.t k            
         if ismember("k",MinVar)
-            %grad(1:M) = grad(1:M) + [integral_0^T real(-1i./(2*k.^2).*Delta u_s.* w_s) dt]*dx*dy;
+            % Assume u is your 1D vector of size Nx*Ny
+            u_2D = reshape(u, [Nx, Ny]); % reshape it into a 2D matrix of size Nx by Ny
+            
+            % Compute the Laplacian
+            u_Lap = del2(u_2D, dx);
+            
+            % Reshape the 2D matrix back into a 1D vector
+            u_Lap_1D = reshape(u_Lap, [Nx*Ny, 1]);
+
+            grad(1:M) = grad(1:M) + sum(real(-1i./(2*k.^2).*u_Lap_1D.* w_s), 2)*dt*dx*dy;
         end
         % the gradient w.r.t gamma            
         if ismember("gamma",MinVar)
