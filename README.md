@@ -9,10 +9,8 @@
 
 This repo is built for nonlinear Schrödinger inversion problems. The package implements the forward simulation of nonlinear Schrödinger equations and enables flexible inversions of parameters using **technique**. Key features of this package include:
 
-- **Feature 1**: Description of feature 1.
-- **Feature 2**: Description of feature 2.
-- **Feature 3**: Description of feature 3.
-- **Feature 4**: Description of feature 4.
+- **Feature 1**: Simultaneous reconstruction of multiple parameters.
+- **Feature 2**: Experiments on multiple data acquisition regimes.
 
 
 ## Installation
