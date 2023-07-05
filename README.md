@@ -45,6 +45,3 @@ Follow these steps to run the `startup.m` script:
     ```
 
 That's it! The necessary paths have been added for this MATLAB session. Whenever you restart MATLAB, make sure to run the `startup.m` script again or set the `Inverse-Nonlinear-Schrodinger` directory as your default directory to run the script automatically at startup.
-
-```bash
-
