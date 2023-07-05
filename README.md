@@ -1,9 +1,12 @@
 # Inverse-Nonlinear-Schrodinger
 
+<div align="center">
 
-| Build Status                                                 | Version                                                      |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-| [![Build Status](https://travis-ci.com/nsoedjak/Inverse-Nonlinear-Schrodinger.svg?branch=master)](https://travis-ci.com/nsoedjak/Inverse-Nonlinear-Schrodinger) | ![Version](https://img.shields.io/badge/version-0.1.0-blue) |
+[![Build Status](https://travis-ci.com/your/Inverse-Nonlinear-Schrodinger.svg?branch=master)](https://travis-ci.com/your/Inverse-Nonlinear-Schrodinger)
+![Version](https://img.shields.io/badge/version-0.1.0-blue)
+
+</div>
+
 
 
 
