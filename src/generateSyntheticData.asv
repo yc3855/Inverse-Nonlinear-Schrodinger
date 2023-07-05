@@ -11,8 +11,8 @@ function d = generateSyntheticData(M, Ns, noiselevel, T, F, k_t, gamma_t, sigmaT
     %       The level of noise to add to the data.
     %   T : float
     %       The final time at which we want the solution.
-    %   F : 2D array (M x Ns)
-    %       The Ns sources/initial conditions for the NLS equation
+    %   F : 2D array (M x Ns) function handle
+    %       The initial condition for the NLS equation.
     %   k_t : float
     %       Coefficient for the NLS equation.
     %   gamma_t : float
@@ -31,7 +31,6 @@ function d = generateSyntheticData(M, Ns, noiselevel, T, F, k_t, gamma_t, sigmaT
 
     % Loop over the number of sources
     for s = 1:Ns
-        f_s = F(:,s);
         % Run NLS equation with initial condition f_s and coefficients
         d_s = NLS_forward(T, f_s, k_t, gamma_t, sigmaTPA_t, sigma_t);
 

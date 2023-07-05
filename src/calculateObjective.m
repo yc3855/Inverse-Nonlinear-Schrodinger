@@ -1,4 +1,4 @@
-function [Phi, grad] = calculateObjective(X, MinVar, Ns, d)
+function [Phi, grad] = calculateObjective(X, MinVar, Ns, D)
     % NLSObj Evaluate the objective function and its gradients.
     %
     % Parameters:
@@ -8,7 +8,7 @@ function [Phi, grad] = calculateObjective(X, MinVar, Ns, d)
     %       The coefficients to be optimized.
     %   Ns : int
     %       The number of sources.
-    %   d : 2D array (M x Ns)
+    %   D : 2D array (M x Ns)
     %       The observed data.
 
     M = Nx * Ny; % Total number of nodes in the spacial mesh
@@ -31,7 +31,7 @@ function [Phi, grad] = calculateObjective(X, MinVar, Ns, d)
         ds_imag = us_imag(:, end);
         ds = ds_real + 1i * ds_imag;
 
-        rz = ds - d(:, s); % Residual on mesh point locations
+        rz = ds - D(:, s); % Residual on mesh point locations
 
         % Contribution to the objective function from source s
         Phi = Phi + 0.5 * sum(abs(rz).^2) * dx * dy;
@@ -41,7 +41,7 @@ function [Phi, grad] = calculateObjective(X, MinVar, Ns, d)
 
             % Solution to the adjoint terminal value problem
             [ws_real, ws_imag, dt] = NLS_adjoint(k_c, gamma_c, sigmaTPA_c, sigma_c, ...
-                us_real, us_imag, real(d(:,s)), imag(d(:,s)), T);
+                us_real, us_imag, real(D(:,s)), imag(D(:,s)), T);
             ws = ws_real + 1i * ws_imag;
             ws = flip(ws, 2);
 
