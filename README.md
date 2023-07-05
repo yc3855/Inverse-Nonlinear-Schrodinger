@@ -23,26 +23,20 @@ This repo is built for nonlinear Schrödinger inversion problems. The package im
 
 
 
-To set up the Inverse-Nonlinear-Schrodinger project in MATLAB, you will need to run the `startup.m` script. This script adds the necessary directories (`src`, `test`, and `examples`) to the MATLAB search path.
+The `startup.m` script is used to initialize the Inverse-Nonlinear-Schrodinger project in MATLAB by adding the necessary directories (`src`, `test`, and `examples`) to the MATLAB search path.
 
-Follow these steps to run the `startup.m` script:
+Follow these steps to set up the project:
 
 1. **Clone the Repository (Optional)**  
     If you haven't already, clone the repository to your local machine.
     ```
-    git clone https://github.com/nsoedjak/Inverse-Nonlinear-Schrodinger
+    git clone https://github.com/nsoedjak/Inverse-Nonlinear-Schrodinger.git
     ```
-    
+
 2. **Open MATLAB**  
     Launch MATLAB on your computer.
 
 3. **Set the Current Directory**  
     In the MATLAB interface, navigate to the current directory toolbar and set it to the `Inverse-Nonlinear-Schrodinger` directory where the `startup.m` file is located. 
 
-4. **Run the `startup.m` Script**  
-    In the MATLAB Command Window, enter the following command and press Enter:
-    ```matlab
-    startup
-    ```
-
-That's it! The necessary paths have been added for this MATLAB session. Whenever you restart MATLAB, make sure to run the `startup.m` script again or set the `Inverse-Nonlinear-Schrodinger` directory as your default directory to run the script automatically at startup.
+That's it! The `startup.m` script will automatically run, and the necessary paths will be added for this MATLAB session. Whenever you restart MATLAB, make sure that the `Inverse-Nonlinear-Schrodinger` directory is set as your current directory for the script to run automatically at startup.
