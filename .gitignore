@@ -1,3 +1,6 @@
 
 .DS_Store
 src/NLSObj.asv
+__pycache__/
+myenv/
+_build/
