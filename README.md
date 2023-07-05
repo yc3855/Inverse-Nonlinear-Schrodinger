@@ -1,4 +1,7 @@
+<div align="center">
+
 # Inverse-Nonlinear-Schrodinger
+</div>
 
 <div align="center">
 
