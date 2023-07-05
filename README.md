@@ -1,9 +1,11 @@
 # Inverse-Nonlinear-Schrodinger
 
 
-| Documentation                                                | Build Status                                                 |
+| Build Status                                                 | Version                                                      |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| [![](https://img.shields.io/badge/docs-dev-blue.svg)](https://your.github.io/Schrodinger.jl/dev/) | [![Build Status](https://travis-ci.com/your/Schrodinger.jl.svg?branch=master)](https://travis-ci.com/your/Schrodinger.jl) |
+| [![Build Status](https://travis-ci.com/nsoedjak/Inverse-Nonlinear-Schrodinger.svg?branch=master)](https://travis-ci.com/nsoedjak/Inverse-Nonlinear-Schrodinger) | ![Version](https://img.shields.io/badge/version-0.1.0-blue) |
+
+
 
 This repo is built for nonlinear Schrödinger inversion problems. The package implements the forward simulation of nonlinear Schrödinger equations and enables flexible inversions of parameters using **technique**. Key features of this package include:
 
@@ -12,11 +14,6 @@ This repo is built for nonlinear Schrödinger inversion problems. The package im
 - **Feature 3**: Description of feature 3.
 - **Feature 4**: Description of feature 4.
 
-Examples can be found in these papers:
-
-[Paper Title](link to the paper)
-
-[Paper Title](link to the paper)
 
 ## Installation
 
