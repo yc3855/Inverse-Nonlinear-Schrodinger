@@ -20,6 +20,36 @@ Examples can be found in these papers:
 
 ## Installation
 
-Schrodinger requires proper installation of [Dependency](link to dependency).
+
+
+To set up the Inverse-Nonlinear-Schrodinger project in MATLAB, you will need to run the `startup.m` script. This script adds the necessary directories (`src`, `test`, and `examples`) to the MATLAB search path.
+
+Follow these steps to run the `startup.m` script:
+
+1. **Clone the Repository (Optional)**  
+    If you haven't already, clone the repository to your local machine.
+    ```
+    git clone <repository-url>
+    ```
+    Replace `<repository-url>` with the URL of the Inverse-Nonlinear-Schrodinger repository.
+
+2. **Open MATLAB**  
+    Launch MATLAB on your computer.
+
+3. **Set the Current Directory**  
+    In the MATLAB interface, navigate to the current directory toolbar and set it to the `Inverse-Nonlinear-Schrodinger` directory where the `startup.m` file is located. Alternatively, you can use the command:
+    ```matlab
+    cd path_to_Inverse-Nonlinear-Schrodinger
+    ```
+    Replace `path_to_Inverse-Nonlinear-Schrodinger` with the actual path to the directory.
+
+4. **Run the `startup.m` Script**  
+    In the MATLAB Command Window, enter the following command and press Enter:
+    ```matlab
+    startup
+    ```
+
+That's it! The necessary paths have been added for this MATLAB session. Whenever you restart MATLAB, make sure to run the `startup.m` script again or set the `Inverse-Nonlinear-Schrodinger` directory as your default directory to run the script automatically at startup.
+
 ```bash
-command to install dependency
+
