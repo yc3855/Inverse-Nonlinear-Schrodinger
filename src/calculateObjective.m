@@ -26,6 +26,7 @@ function [Phi, grad] = calculateObjective(X, MinVar, Ns, d)
     for s = 1:Ns
         % Run NLS equation with current coefficients and forward solver
         [us_real, us_imag, dt] = NLS_forward(k_c, gamma_c, sigmaTPA_c, sigma_c, F(:,s), T);
+        us = us_real + 1i*us_imag;
         ds_real = us_real(:, end);
         ds_imag = us_imag(:, end);
         ds = ds_real + 1i * ds_imag;
@@ -46,31 +47,31 @@ function [Phi, grad] = calculateObjective(X, MinVar, Ns, d)
 
             % Compute the gradients for each coefficient
             if ismember('k', MinVar)
-                grad(1:M) = grad(1:M) + computeGradient('k', k_c, us_real, ws, dt);
+                grad(1:M) = grad(1:M) + computeGradient('k', k_c, us, ws, dt);
             end
 
             if ismember('gamma', MinVar)
-                grad(M+1:2*M) = grad(M+1:2*M) + computeGradient('gamma', gamma_c, us_real, ws, dt);
+                grad(M+1:2*M) = grad(M+1:2*M) + computeGradient('gamma', gamma_c, us, ws, dt);
             end
 
             if ismember('sigmaTPA', MinVar)
-                grad(2*M+1:3*M) = grad(2*M+1:3*M) + computeGradient('sigmaTPA', sigmaTPA_c, us_real, ws, dt);
+                grad(2*M+1:3*M) = grad(2*M+1:3*M) + computeGradient('sigmaTPA', sigmaTPA_c, us, ws, dt);
             end
 
             if ismember('sigma', MinVar)
-                grad(3*M+1:4*M) = grad(3*M+1:4*M) + computeGradient('sigma', sigma_c, us_real, ws, dt);
+                grad(3*M+1:4*M) = grad(3*M+1:4*M) + computeGradient('sigma', sigma_c, us, ws, dt);
             end
         end
     end
 end
 
-function gradient = computeGradient(coeff, coeff_c, us_real, ws, dt)
+function gradient = computeGradient(coeff, coeff_c, us, ws, dt)
     % Compute the gradient for a specific coefficient
     
-    gradient = sum(real(computeTerm(coeff, coeff_c, us_real, ws))) * dt * dx * dy;
+    gradient = sum(real(computeTerm(coeff, coeff_c, us, ws)),2) * dt * dx * dy;
 end
 
-function term = computeTerm(coeff, coeff_c, us_real, ws)
+function term = computeTerm(coeff, coeff_c, us, ws)
     % Compute a specific term for the gradient calculation
     
     switch coeff
@@ -82,11 +83,11 @@ function term = computeTerm(coeff, coeff_c, us_real, ws)
             
             term = -1i ./ (2 * coeff_c.^2) .* u_Lap_1D .* ws;
         case 'gamma'
-            term = 1i * abs(us_real).^2 .* us_real .* ws;
+            term = 1i * abs(us).^2 .* us .* ws;
         case 'sigmaTPA'
-            term = -1/2 * abs(us_real).^2 .* us_real .* ws;
+            term = -1/2 * abs(us).^2 .* us .* ws;
         case 'sigma'
-            term = -1/2 * us_real .* ws;
+            term = -1/2 * us .* ws;
         otherwise
             error('Invalid coefficient specified.');
     end
