@@ -13,11 +13,14 @@ plotInitialGuess(MinVar, X0);
 % Plot true coefficients
 plotTrueCoefficients(MinVar, k_t, gamma_t, sigmaTPA_t, sigma_t);
 
+% Generate sources (initial conditions)
+F = generateSources(Ns);
+
 % Generating synthetic data
-d = generateSyntheticData(M, Ns, noiselevel, T, f_s, k_t, gamma_t, sigmaTPA_t, sigma_t);
+D = generateSyntheticData(M, Ns, noiselevel, T, F, k_t, gamma_t, sigmaTPA_t, sigma_t);
 
 % Setup the minimization algorithm
-[X, fval, exitflag, output, grad] = setupMinimization(X0, MinVar, Ns, d, MaxIT);
+[X, fval, exitflag, output, grad] = setupMinimization(X0, MinVar, Ns, D, MaxIT);
 
 % Plot final results
 plotFinalResults(MinVar, X);
