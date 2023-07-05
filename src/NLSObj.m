@@ -24,6 +24,7 @@ for s = 1:Ns
     %
     % Let d_s be the solution at time T
     [us_real,us_imag,dt]=NLS_forward(k_c,gamma_c,sigmaTPA_c,sigma_c,F(:,s),T);
+    us = us_real + 1i*us_imag;
     ds_real = us_real(:,end);
     ds_imag = us_imag(:,end);
     ds = ds_real + 1i*ds_imag;
