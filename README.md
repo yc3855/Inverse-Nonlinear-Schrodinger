@@ -29,19 +29,14 @@ Follow these steps to run the `startup.m` script:
 1. **Clone the Repository (Optional)**  
     If you haven't already, clone the repository to your local machine.
     ```
-    git clone <repository-url>
+    git clone https://github.com/nsoedjak/Inverse-Nonlinear-Schrodinger
     ```
-    Replace `<repository-url>` with the URL of the Inverse-Nonlinear-Schrodinger repository.
-
+    
 2. **Open MATLAB**  
     Launch MATLAB on your computer.
 
 3. **Set the Current Directory**  
-    In the MATLAB interface, navigate to the current directory toolbar and set it to the `Inverse-Nonlinear-Schrodinger` directory where the `startup.m` file is located. Alternatively, you can use the command:
-    ```matlab
-    cd path_to_Inverse-Nonlinear-Schrodinger
-    ```
-    Replace `path_to_Inverse-Nonlinear-Schrodinger` with the actual path to the directory.
+    In the MATLAB interface, navigate to the current directory toolbar and set it to the `Inverse-Nonlinear-Schrodinger` directory where the `startup.m` file is located. 
 
 4. **Run the `startup.m` Script**  
     In the MATLAB Command Window, enter the following command and press Enter:
