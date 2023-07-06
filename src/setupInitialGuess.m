@@ -1,26 +1,28 @@
-function X0 = setupInitialGuess(MinVar, k_t, gamma_t, sigmaTPA_t, sigma_t)
+function [k_0, gamma_0, sigmaTPA_0, sigma_0] = setupInitialGuess(MinVar, background_k, k_t, background_gamma, gamma_t, background_sigmaTPA, sigmaTPA_t, background_sigma, sigma_t)
     % Set up initial guesses
-    % k_0 = background of k_t
-    % gamma_0 = background of gamma_t
-    % sigmaTPA_0 = background of sigmaTPA_t
-    % sigma_0 = background of sigma_t
+    % If a coefficient is in MinVar, its initial guess is set to its background value.
+    % If a coefficient is not in MinVar, its initial guess is set to its true profile.
 
-    % Set up initial guesses only for coefficients we want to reconstruct
-    if ~ismember("k",MinVar)
-        k_0 = k_t;
+    % Initialize the initial guesses with true profiles
+    k_0 = k_t;
+    gamma_0 = gamma_t;
+    sigmaTPA_0 = sigmaTPA_t;
+    sigma_0 = sigma_t;
+
+    % Set initial guesses to background values for coefficients in MinVar
+    if ismember("k", MinVar)
+        k_0 = background_k;
     end
 
-    if ~ismember("gamma",MinVar)
-        gamma_0 = gamma_t;
+    if ismember("gamma", MinVar)
+        gamma_0 = background_gamma;
     end
 
-    if ~ismember("sigmaTPA",MinVar)
-        sigmaTPA_0 = sigmaTPA_t;
+    if ismember("sigmaTPA", MinVar)
+        sigmaTPA_0 = background_sigmaTPA;
     end
 
-    if ~ismember("sigma",MinVar)
-        sigma_0 = sigma_t;
+    if ismember("sigma", MinVar)
+        sigma_0 = background_sigma;
     end
-
-    X0=[k_0' gamma_0' sigmaTPA_0' sigma_0']';
 end

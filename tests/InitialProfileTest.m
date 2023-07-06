@@ -1,4 +1,3 @@
-% What variables am I reconstructing
 MinVar = {'k', 'gamma', 'sigmaTPA'};
 
 % Define the discretization of the domain
@@ -37,13 +36,38 @@ sigmaTPA_t = generate_sigmaTPA(x, y, background_sigmaTPA, rectangles_sigmaTPA, c
 % Generate sigmaTPA parameter
 gamma_t = generate_gamma(x, y, background_gamma, rectangles_gamma, circles_gamma);
 
+
 % Call the setupInitialGuess function
 [k_0, gamma_0, sigmaTPA_0, sigma_0] = setupInitialGuess(MinVar, background_k, k_t, background_gamma, gamma_t, background_sigmaTPA, sigmaTPA_t, background_sigma, sigma_t);
 
 
-% Plot for sigma_t parameter
-subplot(2, 2, 4); % This selects the fourth plot for plotting.
-imagesc(x, y, sigma_t);
+figure;
+
+% Plot for k_0 parameter
+subplot(2, 2, 1); % This creates a 2-row, 2-column grid of plots and selects the first one for plotting.
+imagesc(x, y, k_0);
 colorbar;
-title('sigma parameter');
+title('Initial guess of k');
 axis equal;
+
+% Plot for gamma_0 parameter
+subplot(2, 2, 2); % This selects the second plot for plotting.
+imagesc(x, y, gamma_0);
+colorbar;
+title('Initial guess of gamma');
+axis equal;
+
+% Plot for sigmaTPA_0 parameter
+subplot(2, 2, 3); % This selects the third plot for plotting.
+imagesc(x, y, sigmaTPA_0);
+colorbar;
+title('sInitial guess of igmaTPA');
+axis equal;
+
+% Plot for sigma_0 parameter
+subplot(2, 2, 4); % This selects the fourth plot for plotting.
+imagesc(x, y, sigma_0);
+colorbar;
+title('Initial guess of sigma');
+axis equal;
+
