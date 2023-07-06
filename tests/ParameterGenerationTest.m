@@ -1,28 +1,23 @@
-% Domain [x_min, x_max, y_min, y_max]
-domain = [0, 50, 0, 50];
-
-% Domain shape [nx, ny]
-domain_shape = [100, 100];
+% Define the discretization of the domain
+x = linspace(0, 1, 100);
+y = linspace(0, 1, 100);
 
 % Define rectangles (lower_left, upper_right, value)
-rectangles_k = struct('lower_left', {[5, 5], [15, 20]}, ...
-                      'upper_right', {[10, 10], [20, 25]}, ...
-                      'value', {1, 2});
+rectangle1 = Rectangle([0.1, 0.1], [0.2, 0.2], 1);
+rectangle2 = Rectangle([0.3, 0.4], [0.4, 0.5], 2);
+rectangles_k = [rectangle1, rectangle2];
 
 % Define circles (center, radius, value)
-circles_k = struct('center', {[30, 30]}, ...
-                   'radius', {5}, ...
-                   'value', {3});
+circle1 = Circle([0.7, 0.7], 0.1, 3);
+circles_k = [circle1];
+
 
 % Generate k parameter
-k_t = generate_k(domain_shape, 0, domain, rectangles_k, circles_k);
+k_t = generate_k(x, y, 0, rectangles_k, circles_k);
 
 % Display the k parameter profile
 figure;
-imagesc(k_t);
+imagesc(x, y, k_t);
 colorbar;
 title('k parameter');
 axis equal;
-
-% You can similarly define rectangles and circles for gamma, sigmaTPA, and sigma
-% and use the respective functions to generate those profiles.

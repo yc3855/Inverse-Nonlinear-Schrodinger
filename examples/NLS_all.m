@@ -7,12 +7,6 @@ M=Nx*Ny; % total number of nodes in the spacial mesh
 % Set up initial guesses
 X0 = setupInitialGuess(MinVar, k_t, gamma_t, sigmaTPA_t, sigma_t);
 
-% Plot initial guesses
-plotInitialGuess(MinVar, X0);
-
-% Plot true coefficients
-plotTrueCoefficients(MinVar, k_t, gamma_t, sigmaTPA_t, sigma_t);
-
 % Generate sources (initial conditions)
 F = generateSources(Ns);
 
@@ -21,9 +15,6 @@ D = generateSyntheticData(M, Ns, noiselevel, T, F, k_t, gamma_t, sigmaTPA_t, sig
 
 % Setup the minimization algorithm
 [X, fval, exitflag, output, grad] = setupMinimization(X0, MinVar, Ns, D, MaxIT);
-
-% Plot final results
-plotFinalResults(MinVar, X);
 
 % Save results
 saveResults(MinVar, X, k_t, gamma_t, sigmaTPA_t, sigma_t, X0, geo, P, E, T, SrcInfo, BdaryInfo, wnum, Ns, MaxIT, ...
