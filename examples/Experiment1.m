@@ -1,9 +1,17 @@
+% This experiment reconstructs only k
+
 % What variables am I reconstructing
-MinVar = {'k', 'gamma', 'sigmaTPA'};
+% MinVar = {'k', 'gamma', 'sigmaTPA'};
+MinVar = {'k'};
 
 % Define the discretization of the domain
 x = linspace(0, 1, 100);
 y = linspace(0, 1, 100);
+[X, Y] = meshgrid(x, y);
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%% True Coefficients %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Reflective Index (k)
 background_k = 1.5; % Typical for glass
@@ -37,13 +45,41 @@ sigmaTPA_t = generate_sigmaTPA(x, y, background_sigmaTPA, rectangles_sigmaTPA, c
 % Generate sigmaTPA parameter
 gamma_t = generate_gamma(x, y, background_gamma, rectangles_gamma, circles_gamma);
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % Call the setupInitialGuess function
-[k_0, gamma_0, sigmaTPA_0, sigma_0] = setupInitialGuess(MinVar, background_k, k_t, background_gamma, gamma_t, background_sigmaTPA, sigmaTPA_t, background_sigma, sigma_t);
+[k_0, gamma_0, sigmaTPA_0, sigma_0] = setupInitialGuess(MinVar, ...
+    background_k, k_t, background_gamma, gamma_t, background_sigmaTPA, ...
+    sigmaTPA_t, background_sigma, sigma_t);
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%% Generate sources (initial conditions) %%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Plot for sigma_t parameter
-subplot(2, 2, 4); % This selects the fourth plot for plotting.
-imagesc(x, y, sigma_t);
-colorbar;
-title('sigma parameter');
-axis equal;
+% Number of sources
+Ns = 10;
+
+% Create a cell array to store parameters for each source
+pulse_params = cell(1, Ns);
+
+% Range for A
+A_range = [0.5, 1.5];
+
+% Range for sigma
+sigma_range = [0.05, 0.1];
+
+% Iterate to create parameters for each source
+for i = 1:Ns
+    A = rand * (A_range(2) - A_range(1)) + A_range(1);
+    x0 = 0.3 + rand * 0.4; % Random position closer to the center
+    y0 = 0.3 + rand * 0.4; % Random position closer to the center
+    sigma = rand * (sigma_range(2) - sigma_range(1)) + sigma_range(1);
+    k0 = 2 * pi;
+    theta = rand * 2 * pi; % Random direction
+    pulse_params{i} = [A, x0, y0, sigma, k0, theta];
+end
+
+% Generate the sources
+sources = generateSources(Ns, pulse_params, X, Y);
