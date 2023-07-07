@@ -1,4 +1,4 @@
-function [Phi, grad] = calculateObjective(X, MinVar, Ns, D)
+function [Phi, grad] = calculateObjective(X, MinVar, Ns, D, M, sources)
     % NLSObj Evaluate the objective function and its gradients.
     %
     % Parameters:
@@ -11,9 +11,8 @@ function [Phi, grad] = calculateObjective(X, MinVar, Ns, D)
     %   D : 2D array (M x Ns)
     %       The observed data.
 
-    M = Nx * Ny; % Total number of nodes in the spacial mesh
-
     % Extract the current values of the coefficients
+    % M should be in workspace
     k_c = X(1:M);
     gamma_c = X(M+1:2*M);
     sigmaTPA_c = X(2*M+1:3*M);
@@ -25,13 +24,17 @@ function [Phi, grad] = calculateObjective(X, MinVar, Ns, D)
 
     for s = 1:Ns
         % Run NLS equation with current coefficients and forward solver
-        [us_real, us_imag, dt] = NLS_forward(k_c, gamma_c, sigmaTPA_c, sigma_c, F(:,s), T);
+        source_s = sources{s};
+        [us_real, us_imag] = forward_NLS(Nx, Ny, Nt, dx, dy, dt, ...
+            source_s, k_t, gamma_t, sigmaTPA_t, sigma_t);
+
         us = us_real + 1i*us_imag;
         ds_real = us_real(:, end);
         ds_imag = us_imag(:, end);
         ds = ds_real + 1i * ds_imag;
 
-        rz = ds - D(:, s); % Residual on mesh point locations
+        % By ASM calculation: residual is the adjoint source
+        rz = conj(ds - D(:, s));
 
         % Contribution to the objective function from source s
         Phi = Phi + 0.5 * sum(abs(rz).^2) * dx * dy;
@@ -40,7 +43,7 @@ function [Phi, grad] = calculateObjective(X, MinVar, Ns, D)
             % Solve the adjoint equations and compute the gradients
 
             % Solution to the adjoint terminal value problem
-            [ws_real, ws_imag, dt] = NLS_adjoint(k_c, gamma_c, sigmaTPA_c, sigma_c, ...
+            [ws_real, ws_imag] = NLS_adjoint(k_c, gamma_c, sigmaTPA_c, sigma_c, ...
                 us_real, us_imag, real(D(:,s)), imag(D(:,s)), T);
             ws = ws_real + 1i * ws_imag;
             ws = flip(ws, 2);

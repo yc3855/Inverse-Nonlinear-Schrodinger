@@ -10,17 +10,20 @@ function [k, gamma, sigmaTPA, sigma, fval, exitflag, output, grad] = setupMinimi
 
     X0 = [k_0_flat; gamma_0_flat; sigmaTPA_0_flat; sigma_0_flat];  % Concatenate into X0
 
+    % Nx, Ny, M should be in the workspace
+    % Determine the dimensions Nx and Ny based on the size of k_0
+    [Nx, Ny] = size(k_0);
+    M = Nx * Ny; % Total number of nodes in the spacial mesh
+
     % Lambda function: f(X) = calculateObjective(X, MinVar, Ns, D)
-    f = @(X) calculateObjective(X, MinVar, Ns, D);
+    f = @(X) calculateObjective(X, MinVar, Ns, D, M, sources);
     
+    % Set up optimizer
     options = optimoptions(@fminunc, 'OutputFcn', @outfun, 'Algorithm', 'quasi-newton', ...
         'Display', 'iter-detailed', 'GradObj', 'on', 'TolFun', 1e-12, ...
         'MaxIter', MaxIT);
     
     [X, fval, exitflag, output, grad] = fminunc(f, X0, options);
-
-    % Determine the dimensions Nx and Ny based on the size of k_0
-%     [Nx, Ny] = size(k_0);
     
     % Properly reshape back to 2D array
     k = reshape(X(1:Nx*Ny), Nx, Ny);  % Reshape the first part of X to match k_0 shape

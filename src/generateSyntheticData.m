@@ -18,14 +18,14 @@ function d = generateSyntheticData(Nx, Ny, Nt, dx, dy, dt, sources, ...
     %       The level of noise to add to the data.
     %
     % Returns:
-    %   d : 4D array (Nx x Ny x Nt x Ns)
-    %       The generated data, with added noise.
+    %   d : 3D array (Nx x Ny x Ns)
+    %       The generated data at the final time, with added noise.
 
     % Get the number of sources
     Ns = length(sources);
 
     % Preallocate the data array
-    d = zeros(Nx, Ny, Nt, Ns);
+    d = zeros(Nx, Ny, Ns);
 
     % Loop over the number of sources
     for s = 1:Ns
@@ -33,7 +33,10 @@ function d = generateSyntheticData(Nx, Ny, Nt, dx, dy, dt, sources, ...
         % Run NLS equation with initial condition source_s and coefficients
         d_s = forward_NLS(Nx, Ny, Nt, dx, dy, dt, source_s, k_t, gamma_t, sigmaTPA_t, sigma_t);
 
-        % Add noise to data
-        d(:, :, :, s) = d_s .* (1 + noise * 2 * (rand(Nx, Ny, Nt) - 0.5));
+        % Extract data at the final time
+        d(:, :, s) = d_s(:, :, end);
     end
+
+    % Add noise to data
+    d = d .* (1 + noise * 2 * (rand(Nx, Ny, Ns) - 0.5));
 end
