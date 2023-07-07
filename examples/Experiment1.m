@@ -10,11 +10,11 @@ Ny = 100;
 x = linspace(0, 1, Nx);
 y = linspace(0, 1, Ny);
 [X, Y] = meshgrid(x, y);
-T = 1;
-t = linspace(0, T, Nt);
-dx = x(1) - x(0);
-dy = y(1) - y(0);
-dt = t(1) - t(0);
+% T = 1;
+% t = linspace(0, T, Nt);
+% dx = x(1) - x(0);
+% dy = y(1) - y(0);
+% dt = t(1) - t(0);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%% True Coefficients %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -95,14 +95,16 @@ sources = generateSources(Ns, pulse_params, X, Y);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Generate data %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-d = generateSyntheticData(Nx, Ny, Nt, dx, dy, dt, sources, ...
-    k_t, sigma_t, sigmaTPA_t, gamma_t, 0);
+% D = generateSyntheticData(Nx, Ny, Nt, dx, dy, dt, sources, ...
+%     k_t, sigma_t, sigmaTPA_t, gamma_t, 0);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Call Minimization %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
+[k, gamma, sigmaTPA, sigma, fval, exitflag, output, grad] ...
+    = setupMinimization(k_0, gamma_0, sigmaTPA_0, sigma_0, ...
+    MinVar, Ns, D, MaxIT);
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

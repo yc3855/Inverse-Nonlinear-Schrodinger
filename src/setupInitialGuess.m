@@ -11,18 +11,18 @@ function [k_0, gamma_0, sigmaTPA_0, sigma_0] = setupInitialGuess(MinVar, backgro
 
     % Set initial guesses to background values for coefficients in MinVar
     if ismember("k", MinVar)
-        k_0 = background_k;
+        k_0 = background_k * ones(size(k_t));
     end
 
     if ismember("gamma", MinVar)
-        gamma_0 = background_gamma;
+        gamma_0 = background_gamma * ones(size(gamma_t));
     end
 
     if ismember("sigmaTPA", MinVar)
-        sigmaTPA_0 = background_sigmaTPA;
+        sigmaTPA_0 = background_sigmaTPA * ones(size(sigmaTPA_t));
     end
 
     if ismember("sigma", MinVar)
-        sigma_0 = background_sigma;
+        sigma_0 = background_sigma * ones(size(sigma_t));
     end
 end
