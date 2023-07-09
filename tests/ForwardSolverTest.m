@@ -7,11 +7,11 @@ Nt = 100;
 x = linspace(0, 1, Nx);
 y = linspace(0, 1, Ny);
 [X, Y] = meshgrid(x, y);
-T = 1;
+T = 0.1;
 t = linspace(0, T, Nt);
-dx = x(1) - x(0);
-dy = y(1) - y(0);
-dt = t(1) - t(0);
+dx = x(2) - x(1);
+dy = y(2) - y(1);
+dt = t(2) - t(1);
 
 
 % Reflective Index (k)
@@ -43,7 +43,7 @@ sigma_t = generate_sigma(x, y, background_sigma, rectangles_sigma, circles_sigma
 % Generate sigmaTPA parameter
 sigmaTPA_t = generate_sigmaTPA(x, y, background_sigmaTPA, rectangles_sigmaTPA, circles_sigmaTPA);
 
-% Generate sigmaTPA parameter
+% Generate sigmaTPA parameter=
 gamma_t = generate_gamma(x, y, background_gamma, rectangles_gamma, circles_gamma);
 
 % Number of sources
@@ -73,11 +73,11 @@ end
 sources = generateSources(Ns, pulse_params, X, Y);
 
 
-d_s = forward_NLS(Nx, Ny, Nt, dx, dy, dt, source{0}, k_t, gamma_t, sigmaTPA_t, sigma_t);
+[ubreal_ret_reshape,ubimag_ret_reshape]= NLS0_forward(Nx,Ny,Nt,dx,dy,dt,k_t,sigma_t,sigmaTPA_t,gamma_t,sources{1});
 
 
-% Define the step size for the animation
-step = 10;  % Plot every 10th frame
-
-% Plot the wavefield animation (amplitude)
-plotWavefieldAnimation(u_real, u_imag, step, 'amplitude', dt);
+% % Define the step size for the animation
+% step = 10;  % Plot every 10th frame
+% 
+% % Plot the wavefield animation (amplitude)
+% plotWavefieldAnimation(u_real, u_imag, step, 'amplitude', dt);
