@@ -1,4 +1,4 @@
-% Need to test teh forward solver
+% Need to test the forward solver
 
 % Define the discretization of the domain
 Nx = 100;
@@ -72,8 +72,15 @@ end
 % Generate the sources
 sources = generateSources(Ns, pulse_params, X, Y);
 
+% Create the 3D array `uint`
+uint = zeros(size(sources{1}, 1), size(sources{1}, 2), 2);
 
-[ubreal_ret_reshape,ubimag_ret_reshape]= NLS0_forward(Nx,Ny,Nt,dx,dy,dt,k_t,sigma_t,sigmaTPA_t,gamma_t,sources{1});
+% Assign the real and imaginary parts of `source` to `uint`
+uint(:, :, 1) = real(sources{1});
+uint(:, :, 2) = imag(sources{1});
+
+% Run forward solver
+[ubreal_ret_reshape,ubimag_ret_reshape]= NLS0_forward(Nx,Ny,Nt,dx,dy,dt,k_t,sigma_t,sigmaTPA_t,gamma_t,uint);
 
 
 % % Define the step size for the animation
