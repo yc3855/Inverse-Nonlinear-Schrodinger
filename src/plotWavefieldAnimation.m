@@ -1,4 +1,4 @@
-function plotWavefieldAnimation(u_real, u_imag, step, option)
+function plotWavefieldAnimation(u_real, u_imag, step, option, dt)
     % Get the size of the data
     [Nx, Ny, Nt] = size(u_real);
     
@@ -23,7 +23,7 @@ function plotWavefieldAnimation(u_real, u_imag, step, option)
         
         % Plot the contour
         contourf(plotData, 'LineWidth', 1.5);
-        title(sprintf('%s (t = %d)', titleStr, t));
+        title(sprintf('%s (t = %.2f)', titleStr, (t-1)*dt));
         colorbar;
         axis equal;
         pause(0.1);  % Pause between frames
